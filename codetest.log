@@ -1,0 +1,59 @@
+290   INFO  org.eclipse.jetty.util.log - Logging initialized @462ms
+361   INFO  org.eclipse.jetty.server.Server - jetty-9.3.z-SNAPSHOT
+1425  INFO  org.reflections.Reflections - Reflections took 858 ms to scan 1 urls, producing 13122 keys and 23151 values 
+1673  INFO  o.j.resteasy.resteasy_jaxrs.i18n - RESTEASY002225: Deploying javax.ws.rs.core.Application: class com.worldline.codetest.FatJarApplication
+1674  INFO  o.j.resteasy.resteasy_jaxrs.i18n - RESTEASY002200: Adding class resource com.worldline.codetest.rest.ProfileResource from Application class com.worldline.codetest.FatJarApplication
+1674  INFO  o.j.resteasy.resteasy_jaxrs.i18n - RESTEASY002200: Adding class resource com.worldline.codetest.rest.DocumentResource from Application class com.worldline.codetest.FatJarApplication
+1675  INFO  o.j.resteasy.resteasy_jaxrs.i18n - RESTEASY002200: Adding class resource io.swagger.jaxrs.listing.ApiListingResource from Application class com.worldline.codetest.FatJarApplication
+1675  INFO  o.j.resteasy.resteasy_jaxrs.i18n - RESTEASY002205: Adding provider class io.swagger.jaxrs.listing.SwaggerSerializers from Application class com.worldline.codetest.FatJarApplication
+1724  INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@52dc71b2{/,jar:file:/home/mutaz/source_code/eclipse/workspace/worldline-codetest2/target/worldline-codetest-1.0-SNAPSHOT.jar!/swagger-ui,AVAILABLE}
+1741  INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@5c450960{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+1741  INFO  org.eclipse.jetty.server.Server - Started @1922ms
+13427 INFO  org.reflections.Reflections - Reflections took 749 ms to scan 1 urls, producing 13122 keys and 23151 values 
+114463 INFO  c.w.c.service.DocumentService - Document saved Successfully to HardDisk
+114464 INFO  c.w.codetest.rest.DocumentResource - Document uploaded succefully test3
+138519 INFO  c.w.c.service.DocumentService - Document saved Successfully to HardDisk
+138519 INFO  c.w.codetest.rest.DocumentResource - Document uploaded succefully test1
+144116 INFO  c.w.c.service.DocumentService - Document saved Successfully to HardDisk
+144116 INFO  c.w.codetest.rest.DocumentResource - Document uploaded succefully test2
+326162 INFO  c.w.c.service.DocumentService - Profile's Documments deleted Successfully
+326163 INFO  c.w.codetest.rest.DocumentResource - Document Deleted Successfully 
+397668 INFO  c.w.c.service.DocumentService - Document saved Successfully to HardDisk
+397668 INFO  c.w.codetest.rest.DocumentResource - Document uploaded succefully test2
+414888 ERROR c.w.codetest.rest.DocumentResource - Docment Uploading Failed 
+com.worldline.codetest.exception.ProfileIsNotExistException: No Profile Found for the following User ammar
+	at com.worldline.codetest.service.DocumentService.createOrUpdateDocuemnt(DocumentService.java:44)
+	at com.worldline.codetest.rest.DocumentResource.uploadDocuemnt(DocumentResource.java:71)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.jboss.resteasy.core.MethodInjectorImpl.invoke(MethodInjectorImpl.java:139)
+	at org.jboss.resteasy.core.ResourceMethodInvoker.invokeOnTarget(ResourceMethodInvoker.java:295)
+	at org.jboss.resteasy.core.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:249)
+	at org.jboss.resteasy.core.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:236)
+	at org.jboss.resteasy.core.SynchronousDispatcher.invoke(SynchronousDispatcher.java:402)
+	at org.jboss.resteasy.core.SynchronousDispatcher.invoke(SynchronousDispatcher.java:209)
+	at org.jboss.resteasy.plugins.server.servlet.ServletContainerDispatcher.service(ServletContainerDispatcher.java:221)
+	at org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.service(HttpServletDispatcher.java:56)
+	at org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.service(HttpServletDispatcher.java:51)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:845)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:584)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1180)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:512)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1112)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:134)
+	at org.eclipse.jetty.server.Server.handle(Server.java:534)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:320)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:251)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:273)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95)
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:93)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.executeProduceConsume(ExecuteProduceConsume.java:303)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceConsume(ExecuteProduceConsume.java:148)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:136)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:671)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:589)
+	at java.base/java.lang.Thread.run(Thread.java:829)

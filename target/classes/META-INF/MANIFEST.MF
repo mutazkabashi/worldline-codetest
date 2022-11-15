@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Built-By: mutaz
+Build-Jdk: 17.0.2
+Implementation-Title: worldline-codetest
+Implementation-Version: 1.0-SNAPSHOT
+Implementation-Vendor-Id: com.worldline
+Created-By: Maven Integration for Eclipse
+
