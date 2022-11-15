@@ -58,51 +58,46 @@ public class ProfileResource {
 		} catch (ProfileIsAlreadyExistException e) {
 			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_IS_ALREADY_EXIST);
 			 return Response.status(400).entity(responseMessage).build();
-		}
-        
-
+		}       
     }
 	
 	@PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns param", notes = "Returns param", response = Profile.class)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Returns param", notes = "Returns param", response = Profile.class)
 	@ApiResponses(value = {
-			 @ApiResponse(code = 201, message = MessageConstants.PROFILE_UPDATED_SUCESSFULLY, response = Profile.class),
-	         @ApiResponse(code = 400, message = MessageConstants.PROFILE_NOT_EXIST, response = ResponseMessage.class)})
-    public Response updateProfile(Profile profile) {
+			@ApiResponse(code = 201, message = MessageConstants.PROFILE_UPDATED_SUCESSFULLY, response = Profile.class),
+			@ApiResponse(code = 400, message = MessageConstants.PROFILE_NOT_EXIST, response = ResponseMessage.class) })
+	public Response updateProfile(Profile profile) {
 
-		if(!StringUtils.isAlpha(profile.getName()) || !StringUtils.isAlpha(profile.getCountry())) {
+		if (!StringUtils.isAlpha(profile.getName()) || !StringUtils.isAlpha(profile.getCountry())) {
 			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_PARAMETERS_ARE_NOT_VALID);
-        	return Response.status(400).entity(responseMessage).build();
-        }
-        
-		try {
-			 profileService.updateProfile(profile);
-			 return Response.status(201).entity(profile).build();
-		} catch (ProfileIsNotExistException e) {
-			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_NOT_EXIST);
-			 return Response.status(400).entity(responseMessage).build();
+			return Response.status(400).entity(responseMessage).build();
 		}
 
-    }
+		try {
+			profileService.updateProfile(profile);
+			return Response.status(201).entity(profile).build();
+		} catch (ProfileIsNotExistException e) {
+			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_NOT_EXIST);
+			return Response.status(400).entity(responseMessage).build();
+		}
+
+	}
     
-
-    @Path("/{name}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns param", notes = "Returns param", response = Profile.class)
-    @ApiResponses(value = {
-			 @ApiResponse(code = 200, message = "OK", response = Profile.class),
-	         @ApiResponse(code = 400, message = MessageConstants.PROFILE_PARAMETER_NAME_IS_NOT_VALID, response = ResponseMessage.class)})
-    public Response getProfile(@PathParam("name") String name) {
-    	if(!StringUtils.isAlpha(name)) {
+	@Path("/{name}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Returns param", notes = "Returns param", response = Profile.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Profile.class),
+			@ApiResponse(code = 400, message = MessageConstants.PROFILE_PARAMETER_NAME_IS_NOT_VALID, response = ResponseMessage.class) })
+	public Response getProfile(@PathParam("name") String name) {
+		if (!StringUtils.isAlpha(name)) {
 			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_PARAMETER_NAME_IS_NOT_VALID);
-        	return Response.status(400).entity(responseMessage).build();
-        }
-       Profile profile = profileService.getProfile(name);
-       return Response.status(200).entity(profile).build();
+			return Response.status(400).entity(responseMessage).build();
+		}
+		Profile profile = profileService.getProfile(name);
+		return Response.status(200).entity(profile).build();
 
-    }
-
+	}
 }
