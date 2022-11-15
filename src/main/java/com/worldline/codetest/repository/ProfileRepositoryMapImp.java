@@ -12,8 +12,6 @@ public class ProfileRepositoryMapImp implements ProfileRepository{
 
 	@Override
 	public Profile createProfile(Profile profile) throws ProfileIsAlreadyExistException {
-		//FIXME how to check duplicate profiles
-		//profile.setId((long) (Math.random()*1000));
 		if(profiles.get(profile.getName())!=null) {
 			throw new ProfileIsAlreadyExistException("Profile is already exist for "+profile.getName()+" user");
 		}
