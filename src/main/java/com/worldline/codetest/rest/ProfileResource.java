@@ -38,28 +38,28 @@ public class ProfileResource {
 	private static ProfileService profileService = MainApp.profileService;
 	
 	@POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns param", notes = "Returns param", response = Profile.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = MessageConstants.PROFILE_CREATED_SUCESSFULLY, response = Profile.class),
-            @ApiResponse(code = 400, message = MessageConstants.PROFILE_PARAMETERS_ARE_NOT_VALID, response = ResponseMessage.class)})
-    public Response createProfile(Profile profile) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Returns param", notes = "Returns param", response = Profile.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = MessageConstants.PROFILE_CREATED_SUCESSFULLY, response = Profile.class),
+			@ApiResponse(code = 400, message = MessageConstants.PROFILE_PARAMETERS_ARE_NOT_VALID, response = ResponseMessage.class) })
+	public Response createProfile(Profile profile) {
 
-        //TODO Validators
-		if(!StringUtils.isAlpha(profile.getName()) || !StringUtils.isAlpha(profile.getCountry())) {
+		// TODO Validators
+		if (!StringUtils.isAlpha(profile.getName()) || !StringUtils.isAlpha(profile.getCountry())) {
 			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_PARAMETERS_ARE_NOT_VALID);
-        	return Response.status(400).entity(responseMessage).build();
-        }
-        Profile result;
+			return Response.status(400).entity(responseMessage).build();
+		}
+		Profile result;
 		try {
 			result = profileService.createProfile(profile);
 			return Response.status(201).entity(result).build();
 		} catch (ProfileIsAlreadyExistException e) {
 			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_IS_ALREADY_EXIST);
-			 return Response.status(400).entity(responseMessage).build();
-		}       
-    }
+			return Response.status(400).entity(responseMessage).build();
+		}
+	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -82,7 +82,6 @@ public class ProfileResource {
 			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_NOT_EXIST);
 			return Response.status(400).entity(responseMessage).build();
 		}
-
 	}
     
 	@Path("/{name}")
