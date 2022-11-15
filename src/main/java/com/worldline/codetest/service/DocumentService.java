@@ -65,7 +65,6 @@ public class DocumentService {
 			}
 		}
 		return;
-
 	}
 
 	public List<String> getProfileDocuments(String name) {
