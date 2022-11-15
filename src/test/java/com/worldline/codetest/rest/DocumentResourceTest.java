@@ -7,6 +7,13 @@ import javax.ws.rs.core.Response;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.worldline.codetest.repository.DocumentRepository;
+import com.worldline.codetest.repository.DocumentRepositoryMapImp;
+import com.worldline.codetest.repository.ProfileRepository;
+import com.worldline.codetest.repository.ProfileRepositoryMapImp;
+import com.worldline.codetest.service.DocumentService;
+import com.worldline.codetest.service.ProfileService;
+
 /**
  * 1- Since we have static service({@code ProfileService} we don't need to create mock here (It is anti pattern and coupling Rest-api with the service, but it is the simplest solution,
  *  and also because the @singelton annotation doesn't work)
@@ -21,7 +28,11 @@ public class DocumentResourceTest {
 	
 	@Before
     public void setup() {
-		 documentResource = new DocumentResource();
+        DocumentRepository dr = new DocumentRepositoryMapImp();
+        ProfileRepository pr = new ProfileRepositoryMapImp();
+        ProfileService ps = new ProfileService(pr );
+        DocumentService ds = new DocumentService(dr, ps);
+        documentResource = new DocumentResource(ds );
     }
 	
 	@Test

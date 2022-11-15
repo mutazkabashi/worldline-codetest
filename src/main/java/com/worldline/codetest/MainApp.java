@@ -31,13 +31,6 @@ public class MainApp {
 	// know why]
 	// we need to use static services for all rest-end-point and use the same Map
 	// for all end-points to track/make different transactions(create/update/get)
-	public static ProfileService profileService;
-	public static DocumentService documentService;
-
-	static {
-		profileService = new ProfileService(new ProfileRepositoryMapImp());
-		documentService = new DocumentService(new DocumentRepositoryMapImp(), profileService);
-	}
 
 	public MainApp() {
 	}

@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.worldline.codetest.domain.Profile;
+import com.worldline.codetest.repository.ProfileRepository;
+import com.worldline.codetest.repository.ProfileRepositoryMapImp;
+import com.worldline.codetest.service.ProfileService;
 
 /**
  * 1- Since we have static service({@code ProfileService} we don't need to create mock here (It is anti pattern and coupling Rest-api with the service, but it is the simplest solution,
@@ -19,11 +22,13 @@ import com.worldline.codetest.domain.Profile;
  */
 public class ProfileResourceTest {
 	
-	ProfileResource userResource;
+	ProfileApi userResource;
 	
 	@Before
     public void setup() {
-		 userResource = new ProfileResource();
+		 ProfileRepository pr = new ProfileRepositoryMapImp();
+        ProfileService ps = new ProfileService(pr );
+        userResource = new ProfileResource(ps );
     }
 	
 	@Test

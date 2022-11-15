@@ -5,8 +5,13 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import com.worldline.codetest.repository.DocumentRepositoryMapImp;
+import com.worldline.codetest.repository.ProfileRepositoryMapImp;
 import com.worldline.codetest.rest.DocumentResource;
+import com.worldline.codetest.rest.ProfileApi;
 import com.worldline.codetest.rest.ProfileResource;
+import com.worldline.codetest.service.DocumentService;
+import com.worldline.codetest.service.ProfileService;
 
 import io.swagger.jaxrs.config.BeanConfig;
 
@@ -17,23 +22,26 @@ import io.swagger.jaxrs.config.BeanConfig;
  */
 public class FatJarApplication extends Application {
 
-    HashSet<Object> singletons = new HashSet<Object>();
+    private static final HashSet<Object> singletons = new HashSet<Object>();
+    private static final HashSet<Class<?>> classes = new HashSet<Class<?>>();
 
     public FatJarApplication() {
+        ProfileService profileService = new ProfileService(new ProfileRepositoryMapImp());
+        DocumentService documentService = new DocumentService(new DocumentRepositoryMapImp(), profileService);
+        
+        ProfileApi profileResource = new ProfileResource(profileService);
+        DocumentResource documentResource = new DocumentResource(documentService);
+        singletons.add(profileResource);
+        singletons.add(documentResource);
         configureSwagger();
     }
 
     @Override
     public Set<Class<?>> getClasses() {
-
-		HashSet<Class<?>> set = new HashSet<Class<?>>();
-        //end-points
-		set.add(ProfileResource.class);
-		set.add(DocumentResource.class);
         //Swagger classes
-		set.add(io.swagger.jaxrs.listing.ApiListingResource.class);
-		set.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
-		return set;
+		classes.add(io.swagger.jaxrs.listing.ApiListingResource.class);
+		classes.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
+		return classes;
     }
 
     @Override

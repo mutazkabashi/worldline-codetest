@@ -20,7 +20,6 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.worldline.codetest.MainApp;
 import com.worldline.codetest.domain.Profile;
 import com.worldline.codetest.exception.DocumentDeleteException;
 import com.worldline.codetest.exception.ProfileIsNotExistException;
@@ -33,12 +32,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import jakarta.inject.Singleton;
 
 
 @Path("/documents")
 @Api(value = "Document", description = "Endpoint for Docuemnt specific operations")
-@Singleton
 /**
  * Document Rest-end point which is responsible for uploading, Retrieving, and deleting Profile's Documents
  * @author mutaz.Abdelgadir
@@ -47,11 +44,11 @@ import jakarta.inject.Singleton;
 public class DocumentResource {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DocumentResource.class);
-	//TODO this is anti pattern, we should use constructor to inject/inject class's fields , but @singelton dosent work , i dont know why
-	// thats why i make this property/field as static so the DB/Map will hold the data during the application life time, other wise 
-	//new map will be created every time we call this class
-	private static  DocumentService documentService = MainApp.documentService;	
+	private final DocumentService documentService;	
 	
+	public DocumentResource(DocumentService documentService) {
+	    this.documentService = documentService;
+	}
 			 
 	@POST
 	@Path("/image-upload")
