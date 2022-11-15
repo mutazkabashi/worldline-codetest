@@ -64,68 +64,67 @@ public class DocumentResource {
 	public Response uploadDocuemnt(MultipartFormDataInput input) throws IOException {
 		// Get API input data
 		Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-	    try {
-		String fileName = uploadForm.get("fileName").get(0).getBodyAsString();
-		String userName = uploadForm.get("userName").get(0).getBodyAsString();
-		List<InputPart> inputParts = uploadForm.get("attachment");
-		 documentService.createOrUpdateDocuemnt(fileName, userName, inputParts);
-		 LOGGER.info("Document uploaded succefully "+fileName);
-	    } catch (ProfileIsNotExistException e) {
-	    	LOGGER.error("Docment Uploading Failed ",e);
-	        ResponseMessage responseMessage = new ResponseMessage(e.getMessage());
-	    	return Response.status(400).entity(responseMessage).build();
+		try {
+			String fileName = uploadForm.get("fileName").get(0).getBodyAsString();
+			String userName = uploadForm.get("userName").get(0).getBodyAsString();
+			List<InputPart> inputParts = uploadForm.get("attachment");
+			documentService.createOrUpdateDocuemnt(fileName, userName, inputParts);
+			LOGGER.info("Document uploaded succefully " + fileName);
+		} catch (ProfileIsNotExistException e) {
+			LOGGER.error("Docment Uploading Failed ", e);
+			ResponseMessage responseMessage = new ResponseMessage(e.getMessage());
+			return Response.status(400).entity(responseMessage).build();
 		} catch (Exception e) {
-			LOGGER.error("Docment Uploading Failed ",e);
+			LOGGER.error("Docment Uploading Failed ", e);
 			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.DOCUMENT_INVALID_PARAMETERS);
-	    	return Response.status(400).entity(responseMessage).build();
+			return Response.status(400).entity(responseMessage).build();
 		}
-	    ResponseMessage responseMessage =new ResponseMessage(MessageConstants.DOCUMENT_UPLOADED_SUCCESSFULLY);
+		ResponseMessage responseMessage = new ResponseMessage(MessageConstants.DOCUMENT_UPLOADED_SUCCESSFULLY);
 		return Response.status(200).entity(responseMessage).build();
 	}
-	
 
-    @Path("/{name}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns param", notes = "Returns param", response = Profile.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = MessageConstants.PROFILE_UPDATED_SUCESSFULLY, response = DocumentDto.class),
-            @ApiResponse(code = 400, message = MessageConstants.PROFILE_NOT_EXIST, response = ResponseMessage.class)})
-    public Response getProfileDocuemnts(@PathParam("name") String name) {
-    	if(!StringUtils.isAlpha(name) || !StringUtils.isAlpha(name)) {
-    		ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_PARAMETERS_ARE_NOT_VALID);
-        	return Response.status(400).entity(responseMessage).build();
-        }
-       List<String> documents = documentService.getProfileDocuments(name);
-       return Response.status(200).entity(new DocumentDto(documents)).build();
-    }
-    
-    @Path("/{name}")
-    @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns param", notes = "Returns param", response = Profile.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = MessageConstants.PROFILE_UPDATED_SUCESSFULLY, response = ResponseMessage.class),
-            @ApiResponse(code = 400, message = MessageConstants.PROFILE_NOT_EXIST, response = ResponseMessage.class)})
-    public Response deleteProfileDocuemnts(@PathParam("name") String name) {
-    	if(!StringUtils.isAlpha(name) || !StringUtils.isAlpha(name)) {
-    		ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_PARAMETERS_ARE_NOT_VALID);
-        	return Response.status(400).entity(responseMessage).build();
-        }
-    	try {
-        documentService.deleteProfileDocuments(name);
-        LOGGER.info("Document Deleted Successfully ");
-        ResponseMessage responseMessage = new ResponseMessage(MessageConstants.DOCUMENT_DELETED_SUCCESSFULLY);
-       return Response.status(200).entity(responseMessage).build();
-    	}catch (DocumentDeleteException dde) {
-    		LOGGER.error("Document Deletion Failed", dde);
-    		ResponseMessage responseMessage = new ResponseMessage(dde.getMessage());
-        	return Response.status(400).entity(responseMessage).build();
-		}catch (Exception e) {
+	@Path("/{name}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Returns param", notes = "Returns param", response = Profile.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = MessageConstants.PROFILE_UPDATED_SUCESSFULLY, response = DocumentDto.class),
+			@ApiResponse(code = 400, message = MessageConstants.PROFILE_NOT_EXIST, response = ResponseMessage.class) })
+	public Response getProfileDocuemnts(@PathParam("name") String name) {
+		if (!StringUtils.isAlpha(name) || !StringUtils.isAlpha(name)) {
+			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_PARAMETERS_ARE_NOT_VALID);
+			return Response.status(400).entity(responseMessage).build();
+		}
+		List<String> documents = documentService.getProfileDocuments(name);
+		return Response.status(200).entity(new DocumentDto(documents)).build();
+	}
+
+	@Path("/{name}")
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Returns param", notes = "Returns param", response = Profile.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = MessageConstants.PROFILE_UPDATED_SUCESSFULLY, response = ResponseMessage.class),
+			@ApiResponse(code = 400, message = MessageConstants.PROFILE_NOT_EXIST, response = ResponseMessage.class) })
+	public Response deleteProfileDocuemnts(@PathParam("name") String name) {
+		if (!StringUtils.isAlpha(name) || !StringUtils.isAlpha(name)) {
+			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.PROFILE_PARAMETERS_ARE_NOT_VALID);
+			return Response.status(400).entity(responseMessage).build();
+		}
+		try {
+			documentService.deleteProfileDocuments(name);
+			LOGGER.info("Document Deleted Successfully ");
+			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.DOCUMENT_DELETED_SUCCESSFULLY);
+			return Response.status(200).entity(responseMessage).build();
+		} catch (DocumentDeleteException dde) {
+			LOGGER.error("Document Deletion Failed", dde);
+			ResponseMessage responseMessage = new ResponseMessage(dde.getMessage());
+			return Response.status(400).entity(responseMessage).build();
+		} catch (Exception e) {
 			LOGGER.error("Document Deletion Failed", e);
 			ResponseMessage responseMessage = new ResponseMessage(MessageConstants.DOCUMENT_DELETED_FAIL);
-        	return Response.status(400).entity(responseMessage).build();
+			return Response.status(400).entity(responseMessage).build();
 		}
-    }
+	}
 
 }
